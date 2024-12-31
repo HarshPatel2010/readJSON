@@ -10,6 +10,18 @@ struct Article {
     author: String,
     paragraph: Vec<Paragraph>,
 }
+
+//For writing JSON
+#[derive(Serialize, Deserialize, Debug)]
+struct Para{
+    name:String,
+};
+#[derive(Serialize, Deserialize, Debug)]
+struct Art{
+art:String,
+auth:String,
+Para:Vec<Para>,
+}
 fn main() {
     let json = r#"
     {
@@ -25,8 +37,13 @@ fn main() {
     let parsed:Article = read_json_type(json);
     println!("the first sentece of para is : {}",parsed.article);
 
+    // write JSON
+    let art = Art{
+        art:String::from("how to work with json")
+    }
+
 }
-fn read_json_type(json:&str)->Article{
+fn read_json_type(json:&str) -> Article {
     let parsed:Article = serde_json::from_str(json).unwrap();
     return parsed
 }
